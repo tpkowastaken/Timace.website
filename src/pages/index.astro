@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
-import ceskoPlatiKartouLogo from "../assets/cesko-plati-kartou__1_-removebg-preview.png";
+import logoImage from "../assets/img__1_-removebg-preview.png";
 ---
 
 <Layout>
@@ -73,21 +73,19 @@ import ceskoPlatiKartouLogo from "../assets/cesko-plati-kartou__1_-removebg-prev
           Instagram
         </a>
       </div>
-      <div class="footer-logo">
-        <a
-          href="https://www.ceskoplatikartou.cz/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="logo-link">
-          <Image
-            src={ceskoPlatiKartouLogo}
-            alt="Česko platí kartou.cz"
-            width={370}
-            height={168}
-            class="logo-image"
-          />
-        </a>
-      </div>
+      <a
+        href="https://ceskoplatikartou.cz"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-logo">
+        <Image
+          src={logoImage}
+          alt="Logo"
+          width={284}
+          height={77}
+          class="logo-image"
+        />
+      </a>
     </div>
   </footer>
 </Layout>
@@ -179,7 +177,6 @@ import ceskoPlatiKartouLogo from "../assets/cesko-plati-kartou__1_-removebg-prev
   .footer-content p {
     font-size: 0.9rem;
     color: var(--color-text-secondary);
-    margin: 0;
   }
 
   .footer-link {
@@ -197,27 +194,30 @@ import ceskoPlatiKartouLogo from "../assets/cesko-plati-kartou__1_-removebg-prev
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .logo-link {
-    display: inline-block;
-    padding: 1.5rem 2rem;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
     text-decoration: none;
+    cursor: pointer;
   }
 
-  .logo-link:hover {
+  .footer-logo:hover {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
   }
 
   .logo-image {
-    max-width: 100%;
-    height: auto;
     display: block;
+    height: auto;
+    width: auto;
+    max-width: 284px;
+    max-height: 77px;
+    filter: brightness(1.1) contrast(1.05);
   }
 
   @media (max-width: 768px) {
@@ -232,17 +232,20 @@ import ceskoPlatiKartouLogo from "../assets/cesko-plati-kartou__1_-removebg-prev
     .footer-content {
       flex-direction: column;
       text-align: center;
-      gap: 2rem;
+    }
+
+    .footer-text {
+      align-items: center;
     }
 
     .footer-logo {
       width: 100%;
-      max-width: 300px;
+      max-width: 284px;
       margin: 0 auto;
     }
 
     .logo-image {
-      width: 100%;
+      max-width: 100%;
       height: auto;
     }
   }

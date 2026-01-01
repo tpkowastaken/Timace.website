@@ -2,13 +2,13 @@
 
 <!-- cursor Session c9541906-c8b8-4695-a1f4-879f4874fb74 (2026-01-01 16:52Z) -->
 
-# Česko platí kartou logo integration (2026-01-01 16:52Z)
+# GoPay and Cesko logo integration (2026-01-01 16:52Z)
 
 _**User (2026-01-01 15:58Z)**_
 
-I have this @src/assets/cesko-plati-kartou__1_-removebg-preview.png   in assets.
+I have this @src/assets/img__1_-removebg-preview.png   in assets.
 
-Now I need to include this file somehow so that it still looks nice with the website. It's lie a small logo you should put at the bottom. It's 740x337. It had a white background that I removed
+Now I need to include this file somehow so that it still looks nice with the website. It's lie a small logo you should put at the bottom. It's 284x77 It had a white background that I removed. It has black text that needs to be readable
 
 Do your best. You can change anything on the website
 
@@ -55,7 +55,7 @@ Reviewing the current site structure and styling to place the logo at the bottom
 ---
 
 
-Adding the logo to the footer using Astro 4's image optimization. Checking the image import approach:
+Adding the logo to the footer. Ensuring it's readable on the dark background. Checking how images are handled in this project:
 
 
 ---
@@ -68,18 +68,18 @@ Adding the logo to the footer using Astro 4's image optimization. Checking the i
 |------|-------|
 | `.cursor/rules/use-correct-assets.mdc` | L17 |
 | `src/pages/index.astro` | L28 |
-| `src/pages/index.astro` | L25-57 |
-| `src/pages/index.astro` | L85-182 |
 | `src/layouts/Layout.astro` | L43 |
+| `src/pages/index.astro` | L42-98 |
 | `astro.config.mjs` | L9 |
 | `README.md` | L46 |
 | `package.json` | L19 |
-| `src/pages/index.astro` | L189-239 |
-| `src/pages/index.astro` | L53-89 |
+| `src/pages/index.astro` | L202-250 |
+| `src/pages/index.astro` | L92-182 |
 | `wrangler.jsonc` | L7 |
 | `src/styles/global.css` | L109 |
 | `tsconfig.json` | L5 |
 | `.vscode/launch.json` | L11 |
+| `src/pages/index.astro` | L25-44 |
 | `.vscode/extensions.json` | L4 |
 
 </details>
@@ -92,7 +92,7 @@ Adding the logo to the footer using Astro 4's image optimization. Checking the i
 ---
 
 
-Adding the logo to the footer using Astro 4's Image component, styled to fit the design:
+Adding the logo to the footer. Using Astro 4's Image component for optimization and ensuring it's readable on the dark background.
 
 
 ---
@@ -109,7 +109,7 @@ Lines added: 2, lines removed: undefined
   ---
   import Layout from "../layouts/Layout.astro";
 + import { Image } from "astro:assets";
-+ import ceskoPlatiKartouLogo from "../assets/cesko-plati-kartou__1_-removebg-preview.png";
++ import logoImage from "../assets/img__1_-removebg-preview.png";
   ---
   
 ```
@@ -151,10 +151,10 @@ Lines added: 19, lines removed: 8
 +       &lt;/div&gt;
 +       &lt;div class="footer-logo"&gt;
 +         &lt;Image
-+           src={ceskoPlatiKartouLogo}
-+           alt="Česko platí kartou.cz"
-+           width={370}
-+           height={168}
++           src={logoImage}
++           alt="Logo"
++           width={284}
++           height={77}
 +           class="logo-image"
 +         /&gt;
 +       &lt;/div&gt;
@@ -173,10 +173,10 @@ Lines added: 19, lines removed: 8
 <details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/pages/index.astro</summary>
 
 **Chunk 1**
-Lines added: 8, lines removed: 1
+Lines added: 7, lines removed: 1
 
 ```diff
-@@ -160,10 +160,17 @@
+@@ -160,5 +160,11 @@
       align-items: center;
       flex-wrap: wrap;
 -     gap: 1rem;
@@ -189,19 +189,13 @@ Lines added: 8, lines removed: 1
 +     gap: 0.5rem;
     }
   
-    .footer-content p {
-      font-size: 0.9rem;
-      color: var(--color-text-secondary);
-+     margin: 0;
-    }
-  
 ```
 
 **Chunk 2**
-Lines added: 23, lines removed: undefined
+Lines added: 27, lines removed: undefined
 
 ```diff
-@@ -178,4 +185,27 @@
+@@ -178,4 +184,31 @@
       color: var(--color-electric-blue);
     }
 + 
@@ -209,23 +203,27 @@ Lines added: 23, lines removed: undefined
 +     display: flex;
 +     align-items: center;
 +     justify-content: center;
-+     opacity: 0.8;
-+     transition: opacity 0.3s ease;
++     padding: 1rem;
++     background: rgba(255, 255, 255, 0.05);
++     border-radius: 12px;
++     backdrop-filter: blur(10px);
++     border: 1px solid rgba(255, 255, 255, 0.1);
++     transition: all 0.3s ease;
 +   }
 + 
 +   .footer-logo:hover {
-+     opacity: 1;
++     background: rgba(255, 255, 255, 0.08);
++     border-color: rgba(255, 255, 255, 0.15);
++     transform: translateY(-2px);
 +   }
 + 
 +   .logo-image {
-+     max-width: 100%;
++     display: block;
 +     height: auto;
-+     filter: brightness(0.9);
-+     transition: filter 0.3s ease;
-+   }
-+ 
-+   .footer-logo:hover .logo-image {
-+     filter: brightness(1);
++     width: auto;
++     max-width: 284px;
++     max-height: 77px;
++     filter: brightness(1.1) contrast(1.05);
 +   }
   
     @media (max-width: 768px) {
@@ -242,26 +240,29 @@ Lines added: 23, lines removed: undefined
 <details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/pages/index.astro</summary>
 
 **Chunk 1**
-Lines added: 12, lines removed: undefined
+Lines added: 15, lines removed: undefined
 
 ```diff
-@@ -221,4 +221,16 @@
-        flex-direction: column;
+@@ -225,4 +225,19 @@
         text-align: center;
-+       gap: 2rem;
+      }
++ 
++     .footer-text {
++       align-items: center;
 +     }
 + 
 +     .footer-logo {
 +       width: 100%;
-+       max-width: 300px;
++       max-width: 284px;
 +       margin: 0 auto;
 +     }
 + 
 +     .logo-image {
-+       width: 100%;
++       max-width: 100%;
 +       height: auto;
-      }
++     }
     }
+  &lt;/style&gt;
 ```
 
 </details>
@@ -304,17 +305,18 @@ Lint results
 
 Added the logo to the footer. Summary:
 
-1. **Imported the logo** using Astro 4's `Image` component from `astro:assets` for optimization
-2. **Added it to the footer** next to the copyright and Instagram link
-3. **Styled it**:
-   - Scaled to 370x168 (half of original 740x337)
-   - Slight opacity (0.8) that increases on hover
-   - Subtle brightness filter for contrast on the dark background
-   - Responsive: stacks vertically on mobile and scales appropriately
+1. **Imported the image** using Astro 4's Image component from `astro:assets` for optimization
+2. **Added it to the footer** alongside the existing copyright and Instagram link
+3. **Styled it** for readability on the dark background:
+   - Light semi-transparent background with blur
+   - Subtle border
+   - Slight brightness/contrast boost
+   - Hover effect
+   - Responsive sizing
 
-The logo appears at the bottom of the page, aligned with the footer content. The transparent background works with the dark theme, and the hover effects match the site's style.
+The logo appears at the bottom right on desktop and centers on mobile. The light background ensures the black text is readable against the dark theme.
 
-The logo will be optimized by Astro (WebP/AVIF formats) and will look good on all screen sizes.
+The logo uses the original 284x77 dimensions and scales responsively. Want any adjustments to size, position, or styling?
 
 ---
 

@@ -93,26 +93,13 @@ import logoImage from "../assets/img__1_-removebg-preview.png";
         </div>
       </div>
       <div class="footer-legal">
-        <div class="legal-info">
-          <p class="legal-label">Název subjektu:</p>
-          <p class="legal-value">TIMACE, družstvo</p>
-        </div>
-        <div class="legal-info">
-          <p class="legal-label">IČO:</p>
-          <p class="legal-value">23962500</p>
-        </div>
-        <div class="legal-info">
-          <p class="legal-label">Spisová značka:</p>
-          <p class="legal-value">Dr 9237 vedená u Městského soudu v Praze</p>
-        </div>
-        <div class="legal-info">
-          <p class="legal-label">Den zápisu:</p>
-          <p class="legal-value">14. listopadu 2025</p>
-        </div>
-        <div class="legal-info">
-          <p class="legal-label">Sídlo:</p>
-          <p class="legal-value">Štúrova 1154/30, Krč, 142 00 Praha 4</p>
-        </div>
+        <p class="legal-text">
+          TIMACE, družstvo | IČO: 23962500 | Dr 9237 vedená u Městského soudu v
+          Praze
+        </p>
+        <p class="legal-text">
+          Štúrova 1154/30, Krč, 142 00 Praha 4 | Zapsáno: 14. listopadu 2025
+        </p>
       </div>
       <a
         href="https://ceskoplatikartou.cz"
@@ -218,29 +205,15 @@ import logoImage from "../assets/img__1_-removebg-preview.png";
   .footer-legal {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
     min-width: 280px;
   }
 
-  .legal-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .legal-label {
+  .legal-text {
     font-size: 0.85rem;
     color: var(--color-text-secondary);
-    opacity: 0.8;
-    font-weight: 500;
     margin: 0;
-  }
-
-  .legal-value {
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
-    margin: 0;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   .footer-content p {
@@ -316,11 +289,7 @@ import logoImage from "../assets/img__1_-removebg-preview.png";
       width: 100%;
       max-width: 400px;
       margin: 0 auto;
-      text-align: left;
-    }
-
-    .legal-info {
-      align-items: flex-start;
+      text-align: center;
     }
 
     .footer-logo {

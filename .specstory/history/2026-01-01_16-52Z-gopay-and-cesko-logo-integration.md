@@ -652,3 +652,516 @@ Made the logo clickable. It links to `https://ceskoplatikartou.cz`, opens in a n
 
 ---
 
+_**User (2026-01-01 15:58Z)**_
+
+There is something making the browser use a lot of resources. Optimize the whole page
+
+---
+
+_**Agent (model composer-1, mode Agent)**_
+
+
+
+---
+
+
+Reviewing the page for performance bottlenecks:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/tom/programming/tiimi/Timace.website/src/pages/index.astro</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/tom/programming/tiimi/Timace.website/src/styles/global.css</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Optimizing performance by addressing expensive animations and effects:
+
+
+---
+
+<tool-use data-tool-type="task" data-tool-name="todo_write">
+<details><summary>Tool use: **todo_write** • Todo List</summary>
+
+- [-] Optimize blur filters and backdrop-filter (expensive GPU operations)
+- [ ] Optimize continuous animations (orbs and gradient background)
+- [ ] Add GPU acceleration hints and reduce repaints
+- [ ] Add prefers-reduced-motion support for accessibility
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/styles/global.css</summary>
+
+**Chunk 1**
+Lines added: 8, lines removed: 1
+
+```diff
+@@ -42,6 +42,13 @@
+  		radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+  		radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
+- 	animation: gradientShift 15s ease infinite;
+  	background-size: 200% 200%;
++ 	will-change: background-position;
++ 	transform: translateZ(0);
++ }
++ 
++ @media (prefers-reduced-motion: no-preference) {
++ 	body::before {
++ 		animation: gradientShift 15s ease infinite;
++ 	}
+  }
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/styles/global.css</summary>
+
+**Chunk 1**
+Lines added: 4, lines removed: 1
+
+```diff
+@@ -66,8 +66,11 @@
+  	position: fixed;
+  	border-radius: 50%;
+- 	filter: blur(80px);
++ 	filter: blur(60px);
+  	opacity: 0.4;
+  	z-index: -1;
+  	pointer-events: none;
++ 	will-change: transform;
++ 	transform: translateZ(0);
++ 	contain: layout style paint;
+  }
+  
+```
+
+**Chunk 2**
+Lines added: undefined, lines removed: 1
+
+```diff
+@@ -78,5 +81,4 @@
+  	top: -200px;
+  	left: -200px;
+- 	animation: float1 20s ease-in-out infinite;
+  }
+  
+```
+
+**Chunk 3**
+Lines added: undefined, lines removed: 1
+
+```diff
+@@ -87,5 +89,4 @@
+  	bottom: -150px;
+  	right: -150px;
+- 	animation: float2 25s ease-in-out infinite;
+  }
+  
+```
+
+**Chunk 4**
+Lines added: 14, lines removed: 1
+
+```diff
+@@ -96,5 +97,18 @@
+  	top: 50%;
+  	right: 10%;
+- 	animation: float3 18s ease-in-out infinite;
++ }
++ 
++ @media (prefers-reduced-motion: no-preference) {
++ 	.orb-1 {
++ 		animation: float1 20s ease-in-out infinite;
++ 	}
++ 
++ 	.orb-2 {
++ 		animation: float2 25s ease-in-out infinite;
++ 	}
++ 
++ 	.orb-3 {
++ 		animation: float3 18s ease-in-out infinite;
++ 	}
+  }
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/styles/global.css</summary>
+
+**Chunk 1**
+Lines added: 7, lines removed: 7
+
+```diff
+@@ -115,29 +115,29 @@
+  @keyframes float1 {
+  	0%, 100% {
+- 		transform: translate(0, 0) scale(1);
++ 		transform: translate3d(0, 0, 0) scale(1);
+  	}
+  	33% {
+- 		transform: translate(100px, 100px) scale(1.1);
++ 		transform: translate3d(100px, 100px, 0) scale(1.1);
+  	}
+  	66% {
+- 		transform: translate(-50px, 150px) scale(0.9);
++ 		transform: translate3d(-50px, 150px, 0) scale(0.9);
+  	}
+  }
+  
+  @keyframes float2 {
+  	0%, 100% {
+- 		transform: translate(0, 0) scale(1);
++ 		transform: translate3d(0, 0, 0) scale(1);
+  	}
+  	50% {
+- 		transform: translate(-100px, -100px) scale(1.2);
++ 		transform: translate3d(-100px, -100px, 0) scale(1.2);
+  	}
+  }
+  
+  @keyframes float3 {
+  	0%, 100% {
+- 		transform: translate(0, 0) scale(1);
++ 		transform: translate3d(0, 0, 0) scale(1);
+  	}
+  	50% {
+- 		transform: translate(50px, -80px) scale(1.15);
++ 		transform: translate3d(50px, -80px, 0) scale(1.15);
+  	}
+  }
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/pages/index.astro</summary>
+
+**Chunk 1**
+Lines added: 3, lines removed: 1
+
+```diff
+@@ -201,7 +201,9 @@
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+-     transition: all 0.3s ease;
++     transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+      cursor: pointer;
++     will-change: transform;
++     transform: translateZ(0);
+    }
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/pages/index.astro</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -211,5 +211,5 @@
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(255, 255, 255, 0.4);
+-     transform: translateY(-2px);
++     transform: translate3d(0, -2px, 0);
+    }
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/styles/global.css</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -242,5 +242,5 @@
+  
+  .btn:hover {
+- 	transform: translateY(-2px);
++ 	transform: translate3d(0, -2px, 0);
+  	box-shadow: 0 6px 30px rgba(139, 92, 246, 0.4);
+  }
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/styles/global.css</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -251,5 +251,5 @@
+  
+  .btn:active {
+- 	transform: translateY(0);
++ 	transform: translate3d(0, 0, 0);
+  }
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/styles/global.css</summary>
+
+**Chunk 1**
+Lines added: 2, lines removed: 2
+
+```diff
+@@ -180,9 +180,9 @@
+  	from {
+  		opacity: 0;
+- 		transform: translateY(30px);
++ 		transform: translate3d(0, 30px, 0);
+  	}
+  	to {
+  		opacity: 1;
+- 		transform: translateY(0);
++ 		transform: translate3d(0, 0, 0);
+  	}
+  }
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="task" data-tool-name="todo_write">
+<details><summary>Tool use: **todo_write** • Todo List</summary>
+
+- [x] Optimize blur filters and backdrop-filter (expensive GPU operations)
+- [x] Optimize continuous animations (orbs and gradient background)
+- [x] Add GPU acceleration hints and reduce repaints
+- [x] Add prefers-reduced-motion support for accessibility
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking for linting errors and adding a few more optimizations:
+
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="read_lints">
+<details>
+          <summary>Tool use: **read_lints** • Read lints for 2 files</summary>
+      
+Lint paths:
+
+- `src/styles/global.css`
+- `src/pages/index.astro`
+
+Lint results
+
+
+**No lint errors found**
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/styles/global.css</summary>
+
+**Chunk 1**
+Lines added: 2, lines removed: undefined
+
+```diff
+@@ -27,4 +27,6 @@
+  	position: relative;
+  	min-height: 100vh;
++ 	-webkit-font-smoothing: antialiased;
++ 	-moz-osx-font-smoothing: grayscale;
+  }
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/pages/index.astro</summary>
+
+**Chunk 1**
+Lines added: 2, lines removed: undefined
+
+```diff
+@@ -221,4 +221,6 @@
+      max-height: 77px;
+      filter: brightness(1.1) contrast(1.05);
++     image-rendering: -webkit-optimize-contrast;
++     image-rendering: crisp-edges;
+    }
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+---
+
+
+Removing the image-rendering property that may not be appropriate:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/tom/programming/tiimi/Timace.website/src/pages/index.astro</summary>
+
+**Chunk 1**
+Lines added: undefined, lines removed: 2
+
+```diff
+@@ -221,6 +221,4 @@
+      max-height: 77px;
+      filter: brightness(1.1) contrast(1.05);
+-     image-rendering: -webkit-optimize-contrast;
+-     image-rendering: crisp-edges;
+    }
+  
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="read_lints">
+<details>
+          <summary>Tool use: **read_lints** • Read lints for 1 file</summary>
+      
+Lint paths:
+
+- `src/pages/index.astro`
+
+Lint results
+
+
+**No lint errors found**
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Optimized the page for performance. Changes:
+
+## Performance optimizations
+
+1. Reduced blur intensity: decreased orb blur from `80px` to `60px` (less GPU work)
+
+2. GPU acceleration:
+   - Switched animations to `translate3d()` instead of `translate()` to use the GPU
+   - Added `transform: translateZ(0)` to force hardware acceleration
+   - Added `will-change` hints for animated elements
+
+3. Rendering isolation:
+   - Added `contain: layout style paint` to orbs to limit repaints
+
+4. Transition optimization:
+   - Changed `transition: all` to specific properties (`background-color`, `border-color`, `transform`) to reduce unnecessary repaints
+
+5. Accessibility:
+   - Added `prefers-reduced-motion` support so animations can be disabled for users who prefer reduced motion
+
+6. Font rendering:
+   - Added font smoothing properties for better text rendering performance
+
+These changes should reduce CPU/GPU usage while keeping the visual appearance. Animations now run on the GPU, and the reduced blur and optimized transitions lower rendering cost.
+
+---
+

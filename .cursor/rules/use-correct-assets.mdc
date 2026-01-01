@@ -1,0 +1,18 @@
+---
+alwaysApply: true
+---
+
+Astro 4 keeps the same three buckets (src/, public/, src/assets/) and the same astro:assets API, but it streamlines the DX and adds a few new conventions.
+
+The “Astro 4 way” boils down to:
+
+
+1. Always put images you want optimised in src/assets/ (or any folder under src/).
+
+2. Import them with an explicit query suffix (?url, ?raw) or use the new "infer" mode so you don’t have to remember the suffix.
+
+3. Use the upgraded <Image /> / getImage() helpers – they now auto-infer format, generate AVIF/WebP srcsets, and work with remote images without an extra integration.
+
+4. Opt-in to "Sharp" as the default image processor (it ships with Astro 4), or swap to squoosh or a CDN service via a one-line config change.
+
+5. Stop worrying about experimental.assets; the feature flag is gone – assets are stable.

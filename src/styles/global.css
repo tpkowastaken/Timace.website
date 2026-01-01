@@ -26,6 +26,8 @@ body {
 	overflow-x: hidden;
 	position: relative;
 	min-height: 100vh;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 /* Animated Gradient Background */
@@ -41,8 +43,15 @@ body::before {
 		radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.3) 0%, transparent 50%),
 		radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
 		radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
-	animation: gradientShift 15s ease infinite;
 	background-size: 200% 200%;
+	will-change: background-position;
+	transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	body::before {
+		animation: gradientShift 15s ease infinite;
+	}
 }
 
 @keyframes gradientShift {
@@ -58,10 +67,13 @@ body::before {
 .orb {
 	position: fixed;
 	border-radius: 50%;
-	filter: blur(80px);
+	filter: blur(60px);
 	opacity: 0.4;
 	z-index: -1;
 	pointer-events: none;
+	will-change: transform;
+	transform: translateZ(0);
+	contain: layout style paint;
 }
 
 .orb-1 {
@@ -70,7 +82,6 @@ body::before {
 	background: var(--color-electric-blue);
 	top: -200px;
 	left: -200px;
-	animation: float1 20s ease-in-out infinite;
 }
 
 .orb-2 {
@@ -79,7 +90,6 @@ body::before {
 	background: var(--color-electric-purple);
 	bottom: -150px;
 	right: -150px;
-	animation: float2 25s ease-in-out infinite;
 }
 
 .orb-3 {
@@ -88,36 +98,49 @@ body::before {
 	background: rgba(139, 92, 246, 0.5);
 	top: 50%;
 	right: 10%;
-	animation: float3 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.orb-1 {
+		animation: float1 20s ease-in-out infinite;
+	}
+
+	.orb-2 {
+		animation: float2 25s ease-in-out infinite;
+	}
+
+	.orb-3 {
+		animation: float3 18s ease-in-out infinite;
+	}
 }
 
 @keyframes float1 {
 	0%, 100% {
-		transform: translate(0, 0) scale(1);
+		transform: translate3d(0, 0, 0) scale(1);
 	}
 	33% {
-		transform: translate(100px, 100px) scale(1.1);
+		transform: translate3d(100px, 100px, 0) scale(1.1);
 	}
 	66% {
-		transform: translate(-50px, 150px) scale(0.9);
+		transform: translate3d(-50px, 150px, 0) scale(0.9);
 	}
 }
 
 @keyframes float2 {
 	0%, 100% {
-		transform: translate(0, 0) scale(1);
+		transform: translate3d(0, 0, 0) scale(1);
 	}
 	50% {
-		transform: translate(-100px, -100px) scale(1.2);
+		transform: translate3d(-100px, -100px, 0) scale(1.2);
 	}
 }
 
 @keyframes float3 {
 	0%, 100% {
-		transform: translate(0, 0) scale(1);
+		transform: translate3d(0, 0, 0) scale(1);
 	}
 	50% {
-		transform: translate(50px, -80px) scale(1.15);
+		transform: translate3d(50px, -80px, 0) scale(1.15);
 	}
 }
 
@@ -158,11 +181,11 @@ p {
 @keyframes fadeInUp {
 	from {
 		opacity: 0;
-		transform: translateY(30px);
+		transform: translate3d(0, 30px, 0);
 	}
 	to {
 		opacity: 1;
-		transform: translateY(0);
+		transform: translate3d(0, 0, 0);
 	}
 }
 
@@ -220,7 +243,7 @@ p {
 }
 
 .btn:hover {
-	transform: translateY(-2px);
+	transform: translate3d(0, -2px, 0);
 	box-shadow: 0 6px 30px rgba(139, 92, 246, 0.4);
 }
 
@@ -229,7 +252,7 @@ p {
 }
 
 .btn:active {
-	transform: translateY(0);
+	transform: translate3d(0, 0, 0);
 }
 
 /* Responsive */

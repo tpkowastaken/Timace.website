@@ -200,15 +200,20 @@ import logoImage from "../assets/img__1_-removebg-preview.png";
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.3s ease;
     text-decoration: none;
     cursor: pointer;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .footer-logo:hover {
     background: rgba(255, 255, 255, 0.6);
     border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
   }
 
   .logo-image {
